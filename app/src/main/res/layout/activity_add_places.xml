@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="21dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/image_preview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:src="@drawable/morning"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/guide1"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4"/>
+
+    <TextView
+        android:id="@+id/button_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fontFamily="@font/merriweather"
+        android:gravity="center"
+        android:text="Upload your images"
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:textSize="@dimen/text_default"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/guide1"
+        android:onClick="addImages"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/input_places"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Places Name"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/guide1">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/merriweather"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/input_decription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/input_places">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/merriweather"
+            android:textSize="@dimen/text_default"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/button_primary"
+        android:text="Add New Places"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/input_decription"
+        android:onClick="SubmitPlaces"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
