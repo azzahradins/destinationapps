@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements PlacesAdapter.OnI
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //TODO 3 : FIX YOUR IMAGE THUMBNAIL SHAF USING PICASSO
         rvPlaces = findViewById(R.id.rv_destination);
         author = Application.getAuthor();
         adapter = new PlacesAdapter(author.getPlaces(), this);

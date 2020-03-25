@@ -45,7 +45,7 @@ public class AddPlaces extends AppCompatActivity {
     }
 
     public void SubmitPlaces(View view) {
-        if(checkLogin() == 0) {
+        if(checkSubmit() == 0) {
             String title = etTitle.getText().toString().trim();
             String description = etDescription.getText().toString().trim();
 
@@ -61,7 +61,7 @@ public class AddPlaces extends AppCompatActivity {
         }
     }
 
-    public int checkLogin(){
+    public int checkSubmit(){
         int error = 0;
         if(etTitle.getText().toString().isEmpty()){
             error++;
@@ -75,7 +75,8 @@ public class AddPlaces extends AppCompatActivity {
     }
 
     public void addImages(View view) {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        //For security reasons (error), use action open document instead to get images.
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, 1);
     }
 
