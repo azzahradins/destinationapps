@@ -9,6 +9,9 @@ public class Places implements Parcelable {
     private String description;
     private Uri image;
 
+    public Places() {
+    }
+
     public Places(String title, String description, Uri image) {
         this.title = title;
         this.description = description;
