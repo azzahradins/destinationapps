@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:cardElevation="8dp"
     app:cardCornerRadius="4dp"
+    android:layout_marginTop="16dp"
     android:layout_marginBottom="16dp"
     android:layout_marginRight="20dp"
     android:layout_marginLeft="20dp"
@@ -29,6 +30,9 @@
             android:layout_height="wrap_content"
             tools:text="ok boomer"
             android:textSize="@dimen/text_default"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingStart="8dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="4dp"/>
     </LinearLayout>

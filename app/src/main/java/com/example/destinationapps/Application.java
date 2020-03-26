@@ -4,6 +4,8 @@ import com.example.destinationapps.models.Author;
 
 public class Application extends android.app.Application {
     private static Author author;
+    //TODO 1 : CREATE SESSION MODELS.
+    // TODO 2 : CREATE LOGIN ACTIVITY.
     @Override
     public void onCreate() {
         super.onCreate();

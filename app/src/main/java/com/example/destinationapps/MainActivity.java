@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Menu;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements PlacesAdapter.OnItemPlacesListener {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements PlacesAdapter.OnI
     private RecyclerView rvPlaces;
     private PlacesAdapter adapter;
     private Author author;
-
+    //TODO 4 : ADD LOGIN BEFORE ADDING NEW PLACES
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements PlacesAdapter.OnI
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //TODO 3 : FIX YOUR IMAGE THUMBNAIL SHAF USING PICASSO
         rvPlaces = findViewById(R.id.rv_destination);
         author = Application.getAuthor();
         adapter = new PlacesAdapter(author.getPlaces(), this);
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements PlacesAdapter.OnI
         intent.putExtra(PLACES_KEY, item);
         intent.putExtra(INDEX_KEY, index);
         startActivity(intent);
+        finish();
     }
 
     @Override

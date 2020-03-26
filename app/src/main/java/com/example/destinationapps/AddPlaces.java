@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class AddPlaces extends AppCompatActivity {
     private static final String INDEX_KEY = "index";
     EditText etTitle, etDescription;
     ImageView ivImages;
+    Button btAddEdit;
     Uri uriImages = null;
     private int index;
     private Places places;
@@ -34,14 +36,28 @@ public class AddPlaces extends AppCompatActivity {
         etTitle = findViewById(R.id.input_places);
         etDescription = findViewById(R.id.input_decription);
         ivImages = findViewById(R.id.image_preview);
+        btAddEdit = findViewById(R.id.button_add_edit);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             places = extras.getParcelable(PLACES_KEY);
-            index = extras.getInt(INDEX_KEY, 0);
+            index = extras.getInt(INDEX_KEY, -1);
             etTitle.setText(places.getTitle());
             etDescription.setText(places.getDescription());
+            if(places.getImage() != null){
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), places.getImage());
+                    ivImages.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    Toast.makeText(this, "Can't load image", Toast.LENGTH_SHORT).show();
+                    Log.e("Image Insert", e.getMessage());
+                }
+            }
         }
+        if(index != -1){
+            btAddEdit.setText("Edit This Place");
+        }
+        Log.d("INFO INDEX", "berapa sekarang ? " + index);
     }
 
     public void SubmitPlaces(View view) {
@@ -51,7 +67,19 @@ public class AddPlaces extends AppCompatActivity {
 
             places.setTitle(title);
             places.setDescription(description);
-            places.setImage(this.uriImages);
+            if(index == -1){ //saat nambah baru
+                if(this.uriImages == null){
+                    places.setImage(Uri.parse("android.resource://x.example.destinationapps/drawable/morning"));
+                }else{
+                    places.setImage(this.uriImages);
+                }
+            }else if(index > -1){ // saat update
+                if(this.uriImages == null){
+                    places.setImage(places.getImage());
+                }else{
+                    places.setImage(this.uriImages);
+                }
+            }
 
             Intent intent = new Intent();
             intent.putExtra(PLACES_KEY, places);
@@ -83,9 +111,7 @@ public class AddPlaces extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_CANCELED){
-            return;
-        }
+        if(resultCode == RESULT_CANCELED){ return; }
         if(requestCode == 1){
             try {
                 if(data!=null){

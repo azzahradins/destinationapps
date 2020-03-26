@@ -1,5 +1,7 @@
 package com.example.destinationapps.adapters;
 
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.destinationapps.R;
 import com.example.destinationapps.models.Places;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder> {
@@ -55,6 +59,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
 
         public void bind(final int index, final Places places){
             textTitle.setText(places.getTitle());
+            Picasso.get().load(places.getImage()).into(imageGreeting);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
