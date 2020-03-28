@@ -102,7 +102,8 @@
         app:layout_constraintStart_toEndOf="@id/guide2"
         app:layout_constraintEnd_toEndOf="parent"
         android:elevation="12dp"
-        card_view:cardCornerRadius="10dp">
+        card_view:cardCornerRadius="10dp"
+        android:onClick="GoToLogin">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -114,6 +115,7 @@
                 android:layout_height="64dp"
                 android:src="@drawable/account"/>
             <TextView
+                android:id="@+id/account_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Login/Logout"

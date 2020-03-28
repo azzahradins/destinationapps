@@ -16,15 +16,18 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.destinationapps.models.Places;
+import com.example.destinationapps.models.Session;
 
 import java.io.IOException;
 
 public class AddPlaces extends AppCompatActivity {
     private static final String PLACES_KEY = "places";
     private static final String INDEX_KEY = "index";
+    private static final int LOGIN_ADD_REQUEST = 1;
     EditText etTitle, etDescription;
     ImageView ivImages;
     Button btAddEdit;
+    Session session;
     Uri uriImages = null;
     private int index;
     private Places places;
@@ -37,7 +40,14 @@ public class AddPlaces extends AppCompatActivity {
         etDescription = findViewById(R.id.input_decription);
         ivImages = findViewById(R.id.image_preview);
         btAddEdit = findViewById(R.id.button_add_edit);
-
+        session = Application.getSession();
+        
+        if(!session.isLoggedIn()){ //kalau belum ada session
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra("login", 1);
+            startActivityForResult(intent, LOGIN_ADD_REQUEST);
+        }
+        
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             places = extras.getParcelable(PLACES_KEY);
@@ -105,14 +115,14 @@ public class AddPlaces extends AppCompatActivity {
     public void addImages(View view) {
         //For security reasons (error), use action open document instead to get images.
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, 2);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_CANCELED){ return; }
-        if(requestCode == 1){
+        if(resultCode == RESULT_CANCELED){ finish(); }
+        if(requestCode == 2){
             try {
                 if(data!=null){
                     uriImages = data.getData();

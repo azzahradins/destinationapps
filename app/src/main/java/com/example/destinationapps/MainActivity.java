@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.example.destinationapps.adapters.PlacesAdapter;
 import com.example.destinationapps.models.Author;
 import com.example.destinationapps.models.Places;
+import com.example.destinationapps.models.Session;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.Nullable;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements PlacesAdapter.OnI
     private RecyclerView rvPlaces;
     private PlacesAdapter adapter;
     private Author author;
-    //TODO 4 : ADD LOGIN BEFORE ADDING NEW PLACES
+    private Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements PlacesAdapter.OnI
         setSupportActionBar(toolbar);
 
         rvPlaces = findViewById(R.id.rv_destination);
+        session = Application.getSession();
         author = Application.getAuthor();
         adapter = new PlacesAdapter(author.getPlaces(), this);
         rvPlaces.setAdapter(adapter);

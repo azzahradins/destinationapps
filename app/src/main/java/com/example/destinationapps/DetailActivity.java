@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.destinationapps.models.Author;
 import com.example.destinationapps.models.Places;
+import com.example.destinationapps.models.Session;
 
 import java.io.IOException;
 
@@ -37,6 +38,7 @@ public class DetailActivity extends AppCompatActivity {
     private int index;
     private Places places;
     private Author author;
+    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,8 @@ public class DetailActivity extends AppCompatActivity {
         tvName = findViewById(R.id.text_places);
         tvDescription = findViewById(R.id.text_description);
         author = Application.getAuthor();
-        // TODO 3 : ADD LOGIN BEFORE EDIT OR DELETE PLACES
+        session = Application.getSession();
+
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             places = extras.getParcelable(PLACES_KEY);
@@ -102,18 +105,18 @@ public class DetailActivity extends AppCompatActivity {
         optionDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes, I do.",
                 new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        author.deletePlaces(index);
-                        onBackPressed();
+                    public void onClick(DialogInterface dialog, int which) { //kalau mau dihapus
+                        if(session.isLoggedIn()){
+                            author.deletePlaces(index);
+                            onBackPressed();
+                        }else{
+                            Toast.makeText(DetailActivity.this, "Access Restricted",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
-        optionDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
+        optionDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No", //kalau tidak jadi dihapus
+                (DialogInterface.OnClickListener) null);
         optionDialog.show();
     }
 
@@ -139,5 +142,13 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     public void SharePlaces(View view) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Hey, check this out: " + places.getTitle() + "?");
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
+
     }
 }

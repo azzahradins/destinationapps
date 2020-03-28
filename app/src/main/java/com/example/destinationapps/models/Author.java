@@ -38,7 +38,6 @@ public class Author {
     }
 
     public void deletePlaces(int index){
-        Places place = places.get(index);
         this.places.remove(index);
     }
 }
