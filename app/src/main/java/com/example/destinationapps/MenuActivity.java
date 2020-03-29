@@ -45,4 +45,9 @@ public class MenuActivity extends AppCompatActivity {
         intent.putExtra("login", 0);
         startActivity(intent);
     }
+
+    public void GoToAbout(View view) {
+        Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+    }
 }
