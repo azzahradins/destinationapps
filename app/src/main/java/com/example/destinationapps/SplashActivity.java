@@ -7,19 +7,28 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
 
-public class SplashActivity extends AppCompatActivity {
+import com.example.destinationapps.models.Session;
 
+public class SplashActivity extends AppCompatActivity {
+    Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         hideAppBar();
+        session = Application.getSession();
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run(){
-                Intent mainIntent = new Intent(SplashActivity.this,  MenuActivity.class);
-                startActivity(mainIntent);
-                finish();
+                if(session.isFirstTime()){
+                    Intent mainIntent = new Intent(SplashActivity.this,  HelpActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+                }else{
+                    Intent mainIntent = new Intent(SplashActivity.this,  MenuActivity.class);
+                    startActivity(mainIntent);
+                    finish();
+                }
             }
         }, 2000);
     }

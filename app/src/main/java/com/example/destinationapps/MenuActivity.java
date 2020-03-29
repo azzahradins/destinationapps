@@ -50,4 +50,11 @@ public class MenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AboutActivity.class);
         startActivity(intent);
     }
+
+    public void GoToHelp(View view) {
+        session.setFirstTime(true);
+        Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

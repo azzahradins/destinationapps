@@ -7,5 +7,8 @@
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
     <string name="image">images</string>
+    <string name="help_okay">Okay</string>
+    <string name="help_skip">Skip</string>
+    <string name="help_next">Next</string>
     <!-- Strings used for fragments for navigation -->
 </resources>

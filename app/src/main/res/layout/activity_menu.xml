@@ -30,7 +30,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:text="Good Morning, Shafira."
+                    android:text="Have A Nice Day, Shafira."
                     android:textColor="#fff"
                     android:textSize="@dimen/Title"
                     android:textStyle="bold"
@@ -141,7 +141,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guide2"
         android:elevation="12dp"
-        card_view:cardCornerRadius="10dp">
+        card_view:cardCornerRadius="10dp"
+        android:onClick="GoToHelp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

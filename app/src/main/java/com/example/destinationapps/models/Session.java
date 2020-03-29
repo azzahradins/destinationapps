@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 public class Session {
     public static final String USERNAME_KEY = "key_user";
     public static final String TOKEN_KEY = "key_token";
+    public static final String FIRST_KEY = "key_first";
     private SharedPreferences preferences;
 
     public Session(Context context) {
@@ -47,6 +48,17 @@ public class Session {
 
     public void logout() {
         preferences.edit().remove(TOKEN_KEY)
+                .apply();
+    }
+
+    public boolean isFirstTime() {
+        return preferences.getBoolean(FIRST_KEY, true);
+        //IF isFirstTime?
+        //RETURN TRUE > THEN WE SHOW HELP ACTIVITY
+    }
+
+    public void setFirstTime(boolean firstTime) {
+        preferences.edit().putBoolean(FIRST_KEY, firstTime)
                 .apply();
     }
 }

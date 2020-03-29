@@ -5,4 +5,27 @@
     <color name="colorPrimaryDarkest">#1E1C1E</color>
     <color name="colorAccent">#63a4ff</color>
     <color name="colorDark">#000</color>
+
+    <!-- for activity helps-->
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#062E2A</color>
+    <color name="dot_dark_screen2">#062E2A</color>
+    <color name="dot_dark_screen3">#062E2A</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#28837A</color>
+    <color name="dot_light_screen2">#28837A</color>
+    <color name="dot_light_screen3">#28837A</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+    </array>
 </resources>

@@ -40,9 +40,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/guide1"
         android:textSize="@dimen/text_default"
-        android:lineHeight="32dp"
+        android:lineSpacingExtra="12dp"
         android:text="This project is used to fullfill the mobile programming class that I took in 2019/2020 at Politeknik Negeri Malang. \n\nThis simple application will be my playground to learn another component in mobile programming such as Kotlin, Android Jetpack, AndroidX and many more. \n\nFurther development will be placed in another branch of this repository feel free to visit me at :"
-        tools:targetApi="p"/>
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
