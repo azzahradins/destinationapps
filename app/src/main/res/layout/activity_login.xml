@@ -67,10 +67,23 @@
             />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <CheckBox
+        android:id="@+id/checkbox_keep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Keep Logged In"
+        android:fontFamily="@font/merriweather"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        android:onClick="KeepLogin"/>
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintTop_toBottomOf="@id/checkbox_keep"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"

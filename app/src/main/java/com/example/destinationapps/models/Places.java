@@ -7,14 +7,16 @@ import android.os.Parcelable;
 public class Places implements Parcelable {
     private String title;
     private String description;
+    private String city;
     private Uri image;
 
     public Places() {
     }
 
-    public Places(String title, String description, Uri image) {
+    public Places(String title, String description, String city, Uri image) {
         this.title = title;
         this.description = description;
+        this.city = city;
         this.image = image;
     }
 
@@ -34,6 +36,14 @@ public class Places implements Parcelable {
         this.description = description;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     public Uri getImage() {
         return image;
     }
@@ -51,12 +61,14 @@ public class Places implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
         dest.writeString(this.description);
+        dest.writeString(this.city);
         dest.writeParcelable(this.image, flags);
     }
 
     protected Places(Parcel in) {
         this.title = in.readString();
         this.description = in.readString();
+        this.city = in.readString();
         this.image = in.readParcelable(Uri.class.getClassLoader());
     }
 

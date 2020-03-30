@@ -54,7 +54,7 @@ public class DetailActivity extends AppCompatActivity {
         if(extras != null){
             places = extras.getParcelable(PLACES_KEY);
             index = extras.getInt(INDEX_KEY, 0);
-            tvName.setText(places.getTitle());
+            tvName.setText(places.getTitle() + ", " + places.getCity());
             getSupportActionBar().setTitle(places.getTitle());
             tvDescription.setText(places.getDescription());
             Bitmap bitmap = null;
@@ -127,7 +127,7 @@ public class DetailActivity extends AppCompatActivity {
             Places places = data.getParcelableExtra(PLACES_KEY);
             if (requestCode == UPDATE_REQUEST) {
                 author.updatePlaces(index, places);
-                tvName.setText(places.getTitle());
+                tvName.setText(places.getTitle() + ", " + places.getCity());
                 tvDescription.setText(places.getDescription());
                 Bitmap bitmap = null;
                 try {

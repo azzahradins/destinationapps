@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.destinationapps.models.Session;
@@ -15,6 +16,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Session session;
     EditText username, password;
+    boolean keep = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void submitLogin(View view) {
-        if(session.validate(username.getText().toString(), password.getText().toString())){
+        if(session.validate(username.getText().toString(), password.getText().toString(), keep)){
             Bundle extras = getIntent().getExtras();
             if(extras != null){
                 int insert = extras.getInt("login");
@@ -61,4 +63,14 @@ public class LoginActivity extends AppCompatActivity {
                 });
         optionDialog.show();
     }
+
+    public void KeepLogin(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+        switch(view.getId()) {
+            case R.id.checkbox_keep:
+                if (checked) keep = true;
+                else keep = false;
+                break;
+        }
+        }
 }

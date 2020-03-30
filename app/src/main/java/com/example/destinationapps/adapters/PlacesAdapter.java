@@ -58,7 +58,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.ViewHolder
         }
 
         public void bind(final int index, final Places places){
-            textTitle.setText(places.getTitle());
+            textTitle.setText(places.getTitle() + ", " + places.getCity());
             Picasso.get().load(places.getImage()).into(imageGreeting);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

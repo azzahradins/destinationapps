@@ -11,7 +11,7 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
 
-        author = new Author("Shafira");
+        author = new Author("Shafira", "1234");
         session = new Session(this);
     }
 

@@ -4,17 +4,23 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
+
+import com.example.destinationapps.Application;
 
 public class Session {
     public static final String USERNAME_KEY = "key_user";
     public static final String TOKEN_KEY = "key_token";
     public static final String FIRST_KEY = "key_first";
     private SharedPreferences preferences;
+    Author author;
+    boolean keepLogin;
 
     public Session(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        author = Application.getAuthor();
     }
 
     public String getUsername() {
@@ -38,9 +44,14 @@ public class Session {
         return (token != null);
     }
 
-    public boolean validate(String username, String password) {
-        if (username.equals("shafira") && password.equals("1234")) {
+    public boolean isKeepLogin(){
+        return keepLogin;
+    }
+
+    public boolean validate(String username, String password, boolean keep) {
+        if (username.equals(author.getName()) && password.equals(author.getPass())) {
             setSession(username, username);
+            keepLogin = keep;
             return true;
         }
         return false;

@@ -1,8 +1,10 @@
 package com.example.destinationapps;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.destinationapps.models.Places;
@@ -24,7 +27,8 @@ public class AddPlaces extends AppCompatActivity {
     private static final String PLACES_KEY = "places";
     private static final String INDEX_KEY = "index";
     private static final int LOGIN_ADD_REQUEST = 1;
-    EditText etTitle, etDescription;
+    EditText etTitle, etDescription, etCity;
+    TextView tvImage;
     ImageView ivImages;
     Button btAddEdit;
     Session session;
@@ -38,6 +42,8 @@ public class AddPlaces extends AppCompatActivity {
         setContentView(R.layout.activity_add_places);
         etTitle = findViewById(R.id.input_places);
         etDescription = findViewById(R.id.input_decription);
+        etCity = findViewById(R.id.input_city);
+        tvImage = findViewById(R.id.text_image);
         ivImages = findViewById(R.id.image_preview);
         btAddEdit = findViewById(R.id.button_add_edit);
         session = Application.getSession();
@@ -52,12 +58,15 @@ public class AddPlaces extends AppCompatActivity {
         if (extras != null) {
             places = extras.getParcelable(PLACES_KEY);
             index = extras.getInt(INDEX_KEY, -1);
+            uriImages = places.getImage();
             etTitle.setText(places.getTitle());
             etDescription.setText(places.getDescription());
-            if(places.getImage() != null){
+            etCity.setText(places.getCity());
+            if(uriImages != null){
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), places.getImage());
                     ivImages.setImageBitmap(bitmap);
+
                 } catch (IOException e) {
                     Toast.makeText(this, "Can't load image", Toast.LENGTH_SHORT).show();
                     Log.e("Image Insert", e.getMessage());
@@ -67,16 +76,17 @@ public class AddPlaces extends AppCompatActivity {
         if(index != -1){
             btAddEdit.setText("Edit This Place");
         }
-        Log.d("INFO INDEX", "berapa sekarang ? " + index);
     }
 
     public void SubmitPlaces(View view) {
         if(checkSubmit() == 0) {
             String title = etTitle.getText().toString().trim();
             String description = etDescription.getText().toString().trim();
+            String city = etCity.getText().toString().trim();
 
             places.setTitle(title);
             places.setDescription(description);
+            places.setCity(city);
             if(index == -1){ //saat nambah baru
                 if(this.uriImages == null){
                     places.setImage(Uri.parse("android.resource://x.example.destinationapps/drawable/morning"));
@@ -109,7 +119,28 @@ public class AddPlaces extends AppCompatActivity {
             error++;
             etDescription.setError("Add some description please");
         }
+        if(etCity.getText().toString().isEmpty()){
+            error++;
+            etDescription.setError("Add some description please");
+        }
+        if(uriImages == null){
+            error++;
+            imageEmpty();
+        }
         return error;
+    }
+
+    public void imageEmpty(){
+        AlertDialog optionDialog = new AlertDialog.Builder(this).create();
+        optionDialog.setMessage("Please Insert Image!");
+        optionDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        optionDialog.show();
     }
 
     public void addImages(View view) {
@@ -121,13 +152,16 @@ public class AddPlaces extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_CANCELED){ finish(); }
+        if(resultCode == RESULT_CANCELED){
+            return;
+        }
         if(requestCode == 2){
             try {
                 if(data!=null){
                     uriImages = data.getData();
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uriImages);
                     ivImages.setImageBitmap(bitmap);
+                    tvImage.setText("");
                 }
             } catch (IOException e) {
                 Toast.makeText(this, "Can't load image", Toast.LENGTH_SHORT).show();

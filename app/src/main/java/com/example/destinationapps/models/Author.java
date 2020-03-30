@@ -5,10 +5,12 @@ import java.util.List;
 
 public class Author {
     private String name;
+    private String pass;
     private List<Places> places;
 
-    public Author(String name) {
+    public Author(String name, String pass) {
         this.name = name;
+        this.pass = pass;
         this.places = new ArrayList<>();
     }
 
@@ -23,6 +25,10 @@ public class Author {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPass() {
+        return pass;
     }
 
     public List<Places> getPlaces() {
