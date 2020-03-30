@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +29,9 @@ public class AddPlaces extends AppCompatActivity {
     private static final String PLACES_KEY = "places";
     private static final String INDEX_KEY = "index";
     private static final int LOGIN_ADD_REQUEST = 1;
-    EditText etTitle, etDescription, etCity;
+    private static final int IMAGE_ADD_REQUEST = 2;
+    EditText etTitle, etDescription;
+    Spinner spCity;
     TextView tvImage;
     ImageView ivImages;
     Button btAddEdit;
@@ -42,7 +46,7 @@ public class AddPlaces extends AppCompatActivity {
         setContentView(R.layout.activity_add_places);
         etTitle = findViewById(R.id.input_places);
         etDescription = findViewById(R.id.input_decription);
-        etCity = findViewById(R.id.input_city);
+        spCity = findViewById(R.id.input_city);
         tvImage = findViewById(R.id.text_image);
         ivImages = findViewById(R.id.image_preview);
         btAddEdit = findViewById(R.id.button_add_edit);
@@ -61,7 +65,9 @@ public class AddPlaces extends AppCompatActivity {
             uriImages = places.getImage();
             etTitle.setText(places.getTitle());
             etDescription.setText(places.getDescription());
-            etCity.setText(places.getCity());
+            if(places.getCity() != null){
+                spCity.setSelection(((ArrayAdapter)spCity.getAdapter()).getPosition(places.getCity()));
+            }
             if(uriImages != null){
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), places.getImage());
@@ -82,7 +88,7 @@ public class AddPlaces extends AppCompatActivity {
         if(checkSubmit() == 0) {
             String title = etTitle.getText().toString().trim();
             String description = etDescription.getText().toString().trim();
-            String city = etCity.getText().toString().trim();
+            String city = spCity.getSelectedItem().toString().trim();
 
             places.setTitle(title);
             places.setDescription(description);
@@ -119,10 +125,6 @@ public class AddPlaces extends AppCompatActivity {
             error++;
             etDescription.setError("Add some description please");
         }
-        if(etCity.getText().toString().isEmpty()){
-            error++;
-            etDescription.setError("Add some description please");
-        }
         if(uriImages == null){
             error++;
             imageEmpty();
@@ -146,16 +148,19 @@ public class AddPlaces extends AppCompatActivity {
     public void addImages(View view) {
         //For security reasons (error), use action open document instead to get images.
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 2);
+        startActivityForResult(intent, IMAGE_ADD_REQUEST);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_CANCELED){
+            if(requestCode == LOGIN_ADD_REQUEST) {
+                finish();
+            }
             return;
         }
-        if(requestCode == 2){
+        if(requestCode == IMAGE_ADD_REQUEST){
             try {
                 if(data!=null){
                     uriImages = data.getData();

@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         hideAppBar();
         session = Application.getSession();
-        if(!session.isKeepLogin()){
+        if(!session.getKeep()){
             session.logout();
         }
         new Handler().postDelayed(new Runnable(){

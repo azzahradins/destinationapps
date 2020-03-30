@@ -17,6 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements PlacesAdapter.OnItemPlacesListener {
 
@@ -27,22 +30,23 @@ public class MainActivity extends AppCompatActivity implements PlacesAdapter.OnI
     private RecyclerView rvPlaces;
     private PlacesAdapter adapter;
     private Author author;
-    private Session session;
+    Session session;
+
+    Spinner spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        spinner = findViewById(R.id.spinner);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         rvPlaces = findViewById(R.id.rv_destination);
         session = Application.getSession();
         author = Application.getAuthor();
-        adapter = new PlacesAdapter(author.getPlaces(), this);
-        rvPlaces.setAdapter(adapter);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        rvPlaces.setLayoutManager(layoutManager);
+        filterCity();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +55,32 @@ public class MainActivity extends AppCompatActivity implements PlacesAdapter.OnI
                 Intent intent = new Intent(MainActivity.this, AddPlaces.class);
                 intent.putExtra(PLACES_KEY, new Places());
                 startActivityForResult(intent, INSERT_REQUEST);
+            }
+        });
+    }
+
+    private void filterCity() {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // memunculkan toast + value Spinner yang dipilih (diambil dari adapter)
+                String city = spinner.getSelectedItem().toString();
+                if(city.equals("All")){
+                    adapter = new PlacesAdapter(author.getPlaces(), MainActivity.this);
+                    rvPlaces.setAdapter(adapter);
+                }else{
+                    adapter = new PlacesAdapter(author.getPlacesCity(spinner.getSelectedItem().toString()),
+                            MainActivity.this);
+                    rvPlaces.setAdapter(adapter);
+                }
+
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+                rvPlaces.setLayoutManager(layoutManager);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
         });
     }

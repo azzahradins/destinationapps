@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="city">
+        <item>All</item>
+        <item>Jakarta</item>
+        <item>Malang</item>
+        <item>Bali</item>
+    </string-array>
+
+    <string-array name="input_city">
+        <item>Jakarta</item>
+        <item>Malang</item>
+        <item>Bali</item>
+        <item>Others</item>
+    </string-array>
+</resources>

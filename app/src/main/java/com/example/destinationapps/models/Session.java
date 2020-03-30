@@ -14,9 +14,9 @@ public class Session {
     public static final String USERNAME_KEY = "key_user";
     public static final String TOKEN_KEY = "key_token";
     public static final String FIRST_KEY = "key_first";
+    public static final String KEEP_KEY = "key_keep";
     private SharedPreferences preferences;
     Author author;
-    boolean keepLogin;
 
     public Session(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -32,10 +32,14 @@ public class Session {
                 .apply();
     }
 
-    public void setSession(String token, String username) {
+    public boolean getKeep(){return preferences.getBoolean(KEEP_KEY, true);}
+
+    public void setSession(String token, String username, boolean keep) {
         preferences.edit().putString(TOKEN_KEY, token)
                 .apply();
         preferences.edit().putString(USERNAME_KEY, username)
+                .apply();
+        preferences.edit().putBoolean(KEEP_KEY, keep)
                 .apply();
     }
 
@@ -44,14 +48,9 @@ public class Session {
         return (token != null);
     }
 
-    public boolean isKeepLogin(){
-        return keepLogin;
-    }
-
     public boolean validate(String username, String password, boolean keep) {
         if (username.equals(author.getName()) && password.equals(author.getPass())) {
-            setSession(username, username);
-            keepLogin = keep;
+            setSession(username, username, keep);
             return true;
         }
         return false;

@@ -1,5 +1,7 @@
 package com.example.destinationapps.models;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,16 @@ public class Author {
 
     public List<Places> getPlaces() {
         return places;
+    }
+
+    public List<Places> getPlacesCity(String city) {
+        List<Places> temp = new ArrayList<>();
+        for(int i = 0; i < places.size(); i++) {
+            if(places.get(i).getCity().equals(city)){
+                temp.add(places.get(i));
+            }
+        }
+        return temp;
     }
 
     public void addPlaces(Places places){

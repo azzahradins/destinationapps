@@ -55,6 +55,5 @@ public class MenuActivity extends AppCompatActivity {
         session.setFirstTime(true);
         Intent intent = new Intent(this, HelpActivity.class);
         startActivity(intent);
-        finish();
     }
 }
